@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input Output Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    #inputArea {
+      margin-bottom: 10px;
+    }
+
+    #outputTab {
+      border: 1px solid #ccc;
+      padding: 10px;
+      min-height: 100px;
+    }
+  </style>
+</head>
+<body>
+
+  <div>
+    <label for="inputArea">Input:</label>
+    <textarea id="inputArea" rows="4" cols="50"></textarea>
+    <br>
+    <button onclick="processInput()">Process Input</button>
+  </div>
+
+  <div>
+    <h2>Output:</h2>
+    <div id="outputTab"></div>
+  </div>
+<button onclick="sharePage()">Share Page</button>
+  <script>
+    function processInput() {
+      var inputText = document.getElementById("inputArea").value;
+      var processedOutput = "Processed: " + inputText; // You can replace this with your actual processing logic
+      displayOutput(processedOutput);
+    }
+
+    function displayOutput(outputText) {
+      var outputTab = document.getElementById("outputTab");
+      outputTab.innerHTML = outputText;
+      // Save the output to local storage for auto-saving
+      localStorage.setItem("lastOutput", outputText);
+    }
+
+    // Load last output from local storage on page load
+    window.onload = function() {
+      var lastOutput = localStorage.getItem("lastOutput");
+      if (lastOutput) {
+        displayOutput(lastOutput);
+      }
+    };
+   
+  
+ 
+
+
+
+
+
+function sharePage() {
+  // Get the current page URL
+  var currentPageUrl = window.location.href;
+
+  // Check if the browser supports the Web Share API
+  if (navigator.share) {
+    navigator.share({
+      title: document.title,
+      url: currentPageUrl
+    })
+    .then(() => console.log('Shared successfully'))
+    .catch((error) => console.error('Error sharing:', error));
+  } else {
+    // Fallback for browsers that do not support the Web Share API
+    alert('Copy the URL below to share:\n\n' + currentPageUrl);
+  }
+}
+
+
+  </script>
+
+</body>
+</html>
